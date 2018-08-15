@@ -7,6 +7,6 @@ const films = require("./routes/films");
 
 app.use(logger).use("/api/", films);
 
-app.listen(process.env.PORT, () =>
+app.listen(3000, () =>
   console.log("listening on http://localhost:3000/api/films")
 );
