@@ -15,7 +15,7 @@ router
 router
   .route("/categories/:id")
   .put((req, res, next) => {
-    res.json(value);
+    res.json(req.body);
   })
   .delete((req, res, next) => {
     res.json({ success: true, id: req.params.id });

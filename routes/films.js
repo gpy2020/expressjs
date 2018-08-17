@@ -11,13 +11,13 @@ router
     res.send([]);
   })
   .post((req, res, next) => {
-    res.json(value);
+    res.json(req.body);
   });
 
 router
   .route("/films/:id")
   .put((req, res, next) => {
-    res.json(value);
+    res.json(req.body);
   })
   .delete((req, res, next) => {
     res.json({ success: true, id: req.params.id });
