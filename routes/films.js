@@ -8,9 +8,11 @@ let connect = null;
 const films = r.db("films").table("films");
 
 r.connect(
-  { host: "localhost", port: 28015 },
+  "127.0.0.1",
   (err, conn) => {
-    if (err) throw err;
+    if (err) {
+      throw err;
+    }
     connect = conn;
   }
 );
@@ -85,14 +87,18 @@ router
   .route("/films")
   .get(async (req, res, next) => {
     films.run(connect, (err, cursor) => {
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
       cursor.toArray((err, result) => {
-        if (err) throw err;
+        if (err) {
+          throw err;
+        }
         if (result.length > 10) {
           const resultArr = [];
-          for (let i = 0; i < 10; i++) {
-            resultArr.push(result[i]);
-          }
+          result.map(item => {
+            resultArr.push(item);
+          });
           res.json(resultArr);
         } else res.json(result);
       });
@@ -104,7 +110,9 @@ router
         res.status(400).send(`${res.statusCode}: ${err.message}`);
       } else {
         films.insert(value).run(connect, (err, result) => {
-          if (err) throw err;
+          if (err) {
+            throw err;
+          }
           res.json(value);
         });
       }
@@ -122,7 +130,9 @@ router
           .get(+req.params.id)
           .update(value)
           .run(connect, (err, result) => {
-            if (err) throw err;
+            if (err) {
+              throw err;
+            }
             res.json(value);
           });
       }
@@ -133,7 +143,9 @@ router
       .get(+req.params.id)
       .delete()
       .run(connect, (err, result) => {
-        if (err) throw err;
+        if (err) {
+          throw err;
+        }
         res.json({ success: true, id: req.params.id });
       });
   });

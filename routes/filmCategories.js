@@ -9,7 +9,9 @@ const filmCategories = r.db("films").table("filmCategories");
 r.connect(
   "127.0.0.1",
   (err, conn) => {
-    if (err) throw err;
+    if (err) {
+      throw err;
+    }
     connect = conn;
   }
 );
@@ -50,9 +52,13 @@ router
   .route("/categories")
   .get((req, res, next) => {
     filmCategories.run(connect, (err, cursor) => {
-      if (err) throw err;
+      if (err) {
+        throw err;
+      }
       cursor.toArray((err, result) => {
-        if (err) throw err;
+        if (err) {
+          throw err;
+        }
         res.json(result);
       });
     });
@@ -63,7 +69,9 @@ router
         res.status(400).send(`${res.statusCode}: ${err.message}`);
       } else {
         filmCategories.insert(value).run(connect, (err, result) => {
-          if (err) throw err;
+          if (err) {
+            throw err;
+          }
           res.json(value);
         });
       }
@@ -80,7 +88,9 @@ router
           .get(+req.params.id)
           .update(value)
           .run(connect, (err, result) => {
-            if (err) throw err;
+            if (err) {
+              throw err;
+            }
             res.json(value);
           });
       }
@@ -91,7 +101,9 @@ router
       .get(+req.params.id)
       .delete()
       .run(connect, (err, result) => {
-        if (err) throw err;
+        if (err) {
+          throw err;
+        }
         res.json({ success: true, id: req.params.id });
       });
   });
